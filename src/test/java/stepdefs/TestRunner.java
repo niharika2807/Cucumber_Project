@@ -13,37 +13,28 @@ import net.masterthought.cucumber.Configuration;
 import net.masterthought.cucumber.ReportBuilder;
 
 @RunWith(Cucumber.class)
-
 @CucumberOptions(
-		
-		monochrome= true,
-		plugin={"pretty","html:target/cucumber-report","json:target/cucumber.json"},
-		features = "src/test/java/features", 
-		glue = "stepdefs",
-		tags = {"@sanity"}
-		//tags = {"not @ignore"}  // it will ignore all the @ignore scenarios and rest all will be executed
-		//tags = {"@login"}  // it will run all the scenarios in login feature file
-		//tags = {"@sanity or @regression"} // it will execute all the scenarios with @sanity or @regression
-		//tags = {"@sanity and @regression"} // it will execute all the scenarios with @sanity and @regression both
-		)
+    monochrome = true,
+    plugin = {"pretty", "html:target/cucumber-report", "json:target/cucumber.json"},
+    features = "src/test/java/features",
+    glue = "stepdefs",
+    tags = "@sanity"
+)
 
 public class TestRunner {
-	
-	@AfterClass
+
+    @AfterClass
     public static void setup() {
         File reportOutputDirectory = new File("target");
         List<String> jsonFiles = Arrays.asList("target/cucumber.json");
-        String buildNumber = "1";
-        String projectName = "cucumber-project";
-        boolean runWithJenkins = false;
-        boolean parallelTesting = false;
-        Configuration configuration = new Configuration(reportOutputDirectory, projectName);
-        configuration.setBuildNumber(buildNumber);
+
+        Configuration configuration = new Configuration(reportOutputDirectory, "cucumber-project");
+        configuration.setBuildNumber("1");
         configuration.addClassifications("Platform", "Windows");
         configuration.addClassifications("Browser", "Chrome");
         configuration.addClassifications("Branch", "release/1.0");
+
         ReportBuilder reportBuilder = new ReportBuilder(jsonFiles, configuration);
         reportBuilder.generateReports();
     }
-
 }

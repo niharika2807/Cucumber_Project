@@ -13,16 +13,17 @@ import io.cucumber.java.Scenario;
 
 public class Hooks {
 
-	public static WebDriver driver;
+    public static WebDriver driver;
 
-	@Before
-	public void SetUp() {
-		driver = new ChromeDriver();
-		driver.manage().window().maximize();
-		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
-	}
+    @Before
+    public void setUp() {
+        driver = new ChromeDriver();
+        driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+    }
 
-	@After
+    
+    @After
 	public void TearDown(Scenario scenario) {
 
 		if (scenario.isFailed()) {
